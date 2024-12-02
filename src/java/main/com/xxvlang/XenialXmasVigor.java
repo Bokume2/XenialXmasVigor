@@ -9,7 +9,7 @@ import java.nio.file.NoSuchFileException;
 public class XenialXmasVigor {
     
     public static final String MESSAGE_USAGE = 
-        "Usage: java com.xxvlang.XenialXmasVigor <source>";
+        "Usage: java com.xxvlang.XenialXmasVigor <source file>";
     
     public static final String MESSAGE_SHORT_ARGUMENT =
         "Error: Source file name is not passed.";
