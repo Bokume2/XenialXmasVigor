@@ -30,8 +30,23 @@ public class XXVInt {
         return sub(op,false);
     }
 
+    public XXVInt multiply(XXVInt op, boolean canOverflow, boolean quickCompute)
+        throws XXVException
+    {
+        if (!quickCompute) {
+            XXVInt result = new XXVInt(0);
+            int opValue = op.intValue;
+            for (int i = 1; i < opValue; i++) {
+                result = result.add(this,canOverflow);
+            }
+            return result;
+        } else {
+            return new XXVInt(this.intValue * op.intValue());
+        }
+    }
+    
     public XXVInt multiply(XXVInt op, boolean canOverflow) throws XXVException {
-        return new XXVInt(this.intValue * op.intValue(),canOverflow);
+        return multiply(op,canOverflow,false);
     }
 
     public XXVInt multiply(XXVInt op) throws XXVException {
@@ -58,13 +73,28 @@ public class XXVInt {
     public XXVInt modulo(XXVInt op) throws XXVException {
         return modulo(op,false);
     }
+
+    public XXVInt exponentiate(XXVInt op, boolean canOverflow, boolean quickCompute)
+        throws XXVException
+    {
+        if (!quickCompute) {
+            XXVInt result = new XXVInt(1);
+            int opValue = op.intValue();
+            for (int i = 0; i < opValue; i++) {
+                result = result.multiply(this,canOverflow);
+            }
+            return result;
+        } else {
+            int opValue = op.intValue(), result = 1;
+            for (int i = 0; i < opValue; i++) {
+                result *= this.intValue;
+            }
+            return new XXVInt(result,canOverflow);
+        }
+    }
     
     public XXVInt exponentiate(XXVInt op, boolean canOverflow) throws XXVException {
-        int opValue = op.intValue(), result = 1;
-        for (int i = 0; i < opValue; i++) {
-            result *= this.intValue;
-        }
-        return new XXVInt(result,canOverflow);
+        return exponentiate(op,canOverflow,false);
     }
 
     public XXVInt exponentiate(XXVInt op) throws XXVException {
