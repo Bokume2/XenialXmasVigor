@@ -53,7 +53,7 @@ public class XXVInt {
         return multiply(op,false);
     }
 
-    public XXVInt devide(XXVInt op, boolean canOverflow)
+    public XXVInt divide(XXVInt op, boolean canOverflow)
         throws XXVException, ArithmeticException
     {
         if (op.intValue == 0) throw new ArithmeticException(XXVException.MESSAGE_ZERO_DEVIDE);
@@ -63,7 +63,7 @@ public class XXVInt {
     public XXVInt devide(XXVInt op)
         throws XXVException, ArithmeticException
     {
-        return devide(op,false);
+        return divide(op,false);
     }
 
     public XXVInt modulo(XXVInt op, boolean canOverflow) throws XXVException {
