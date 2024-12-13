@@ -9,6 +9,8 @@ public class XXVTrees {
     private boolean[] flags;
     private XXVStack[] stacks;
 
+    private int pc;
+
     public void connect(int srcIndex, int destIndex, boolean sameOrder) {
         try {
             if (!sameOrder) {
@@ -35,6 +37,22 @@ public class XXVTrees {
 
     public void sizePush(int index) throws XXVException {
         stacks[index].push(stacks[index].getContentSize());
+    }
+
+    public void next() {
+        this.pc++;
+    }
+
+    public void previous() {
+        this.pc--;
+    }
+
+    public void skip(int length) {
+        this.pc += length;
+    }
+
+    public void back(int length) {
+        this.pc -= length;
     }
 
     public XXVInt popStack(int index) throws XXVException {
@@ -77,6 +95,10 @@ public class XXVTrees {
         this.stacks[index] = stack.copy();
     }
 
+    public void setPC(int value) {
+        this.pc = value;
+    }
+
     public boolean getFlag(int index) {
         return this.flags[index];
     }
@@ -94,9 +116,14 @@ public class XXVTrees {
         return Arrays.copyOf(this.stacks,this.stacks.length);
     }
 
+    public int getPC() {
+        return this.pc;
+    }
+
     public XXVTrees() {
         flags = new boolean[25];
         stacks = new XXVStack[25];
+        pc = 0;
     }
 
 }
