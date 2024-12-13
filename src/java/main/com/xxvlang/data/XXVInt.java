@@ -57,7 +57,7 @@ public class XXVInt {
         throws XXVException, ArithmeticException
     {
         if (op.intValue == 0) throw new ArithmeticException(XXVException.MESSAGE_ZERO_DEVIDE);
-        return new XXVInt(this.intValue + op.intValue(),canOverflow);
+        return new XXVInt(this.intValue / op.intValue(),canOverflow);
     }
 
     public XXVInt devide(XXVInt op)
