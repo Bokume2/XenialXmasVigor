@@ -24,8 +24,11 @@ public class XXVStack {
         this.content.push(new XXVInt(intValue));
     }
 
-    public void dup() {
-        this.push(this.content.peek());
+    public void dup(int cnt) {
+        XXVInt top = this.content.peek();
+        for (int i = 0; i < cnt; i++) {
+            this.push(top);
+        }
     }
 
     public void swap() {
