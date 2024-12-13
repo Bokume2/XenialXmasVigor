@@ -3,16 +3,14 @@ package com.xxvlang.data;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
-import com.xxvlang.exception.XXVException;
+import com.xxvlang.exception.*;
 
 public class XXVStack {
     
-    public static final String MESSAGE_STACK_EMPTY = "Error: Popped from empty stack.";
-    
     private ArrayDeque<XXVInt> content;
 
-    public XXVInt pop() throws UnsupportedOperationException {
-        if(this.isEmpty()) throw new UnsupportedOperationException(MESSAGE_STACK_EMPTY);
+    public XXVInt pop() throws XXVException {
+        if(this.isEmpty()) throw new XXVException(XXVExceptionType.STACK_EMPTY);
         return this.content.pop();
     }
 
@@ -31,14 +29,14 @@ public class XXVStack {
         }
     }
 
-    public void swap() {
+    public void swap() throws XXVException {
         XXVInt first = this.pop();
         XXVInt second = this.pop();
         this.push(first);
         this.push(second);
     }
 
-    public void rotate(int depth) {
+    public void rotate(int depth) throws XXVException {
         XXVStack tmpStack = new XXVStack();
         for (int i = 0; i < depth - 1; i++) {
             tmpStack.push(this.pop());
