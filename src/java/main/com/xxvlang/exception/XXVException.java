@@ -10,6 +10,10 @@ public class XXVException extends Exception {
     public static final String MESSAGE_FILE_NOT_FOUND =
         "Error: Source file is not found.";
 
+    /* for Statement */
+    public static final String MESSAGE_IMPL_ERROR =
+        "Implementation error: Wrong usage of class";
+
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
         "Error: A cell overflowed without option.";
