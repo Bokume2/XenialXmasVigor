@@ -26,6 +26,10 @@ public class XXVException extends Exception {
     public static final String MESSAGE_ZERO_DEVIDE =
         "Arithmetic Error: You devided some number by 0(Z).";
 
+    /* for XXVStack */
+    public static final String MESSAGE_STACK_EMPTY =
+        "Error: Popped from empty stack.";
+
     /* others */
     public static final String MESSAGE_OTHER_EXCEPTION =
         """

@@ -10,6 +10,9 @@ public enum XXVExceptionType {
     ILLEGAL_DIGIT(XXVException.MESSAGE_ILLEGAL_DIGIT),
     LARGE_FOR_CHAR(XXVException.MESSAGE_LARGE_FOR_CHAR),
 
+    /* for XXVStack */
+    STACK_EMPTY(XXVException.MESSAGE_STACK_EMPTY),
+
     /* others */
     OTHER_EXCEPTION(XXVException.MESSAGE_OTHER_EXCEPTION);
 
