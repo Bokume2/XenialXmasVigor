@@ -60,7 +60,7 @@ public class XXVInt {
         return new XXVInt(this.intValue / op.intValue(),canOverflow);
     }
 
-    public XXVInt devide(XXVInt op)
+    public XXVInt divide(XXVInt op)
         throws XXVException, ArithmeticException
     {
         return divide(op,false);
@@ -152,7 +152,7 @@ public class XXVInt {
         this.intValue = intValue;
         if (intValue < 0) intValue = -intValue;
         this.digits = new byte[DIGITS_NUM];
-        for (int i = this.digits.length - 1; i >= 0; i--) {
+        for (int i = DIGITS_NUM - 1; i >= 0; i--) {
             this.digits[i] = (byte)(intValue % 25);
             intValue /= 25;
         }
