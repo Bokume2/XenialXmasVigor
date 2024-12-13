@@ -4,8 +4,11 @@ public enum XXVExceptionType {
     
     /* for XXVInt */
     OVERFLOW(XXVException.MESSAGE_OVERFLOW),
-    LARGE_FOR_CHAR(XXVException.MESSAGE_LARGE_FOR_CHAR),
+    TOO_MUCH_STR_DIGITS(XXVException.MESSAGE_TOO_MUCH_STR_DIGITS),
+    TOO_MUCH_DIGITS(XXVException.MESSAGE_TOO_MUCH_DIGITS),
+    ILLEGAL_STR_DIGIT(XXVException.MESSAGE_ILLEGAL_STR_DIGIT),
     ILLEGAL_DIGIT(XXVException.MESSAGE_ILLEGAL_DIGIT),
+    LARGE_FOR_CHAR(XXVException.MESSAGE_LARGE_FOR_CHAR),
 
     /* others */
     OTHER_EXCEPTION(XXVException.MESSAGE_OTHER_EXCEPTION);
@@ -19,5 +22,5 @@ public enum XXVExceptionType {
     private XXVExceptionType(String message) {
         this.message = message;
     }
-    
+
 }

@@ -13,10 +13,16 @@ public class XXVException extends Exception {
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
         "Error: A cell overflowed without option.";
+    public static final String MESSAGE_TOO_MUCH_STR_DIGITS =
+        "Error: Casting from String to XXVInt failed. (Too much digits)";
+    public static final String MESSAGE_TOO_MUCH_DIGITS =
+        "Error: Casting from byte[] to XXVInt failed. (Too much digits)";
+    public static final String MESSAGE_ILLEGAL_STR_DIGIT =
+        "Error: Casting from String to XXVInt failed. (Illegal digit)";
+    public static final String MESSAGE_ILLEGAL_DIGIT =
+        "Error: Casting from byte[] to XXVInt failed. (Illegal digit)";
     public static final String MESSAGE_LARGE_FOR_CHAR =
         "Error: Casting from int to char failed.";
-    public static final String MESSAGE_ILLEGAL_DIGIT =
-        "Error: Casting from String to XXVInt failed";
     public static final String MESSAGE_ZERO_DEVIDE =
         "Arithmetic Error: You devided some number by 0(Z).";
 
@@ -37,5 +43,5 @@ public class XXVException extends Exception {
         super(type.getMessage());
         this.type = type;
     }
-    
+
 }
