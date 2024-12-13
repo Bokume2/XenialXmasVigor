@@ -17,6 +17,7 @@ public class XenialXmasVigor {
     public static final int ERR_CODE_SHORT_ARGUMENT = 1;
     public static final int ERR_CODE_TOO_MUCH_ARGUMENT = 2;
     public static final int ERR_CODE_FILE_NOT_FOUND = 3;
+    public static final int ERR_CODE_XXV = 25;
     public static final int ERR_CODE_OTHER = 10;
     
     public static void main(String args[]) {
@@ -40,6 +41,9 @@ public class XenialXmasVigor {
         } catch (NoSuchFileException ns) {
             System.err.println(XXVException.MESSAGE_FILE_NOT_FOUND);
             System.exit(ERR_CODE_FILE_NOT_FOUND);
+        } catch (XXVException xe) {
+            System.err.println(xe.getMessage());
+            System.exit(ERR_CODE_XXV);
         } catch (Exception e) {
             System.err.println(XXVException.MESSAGE_OTHER_EXCEPTION);
             e.printStackTrace();
