@@ -101,6 +101,28 @@ public class XXVInt {
         return exponentiate(op,false);
     }
 
+    public XXVInt shift(int length) {
+        if (length == 0) return this;
+        byte[] beforeDigits = this.digits;
+        byte[] resultDigits = new byte[DIGITS_NUM];
+        if (length > 0) {
+            for (int i = 0; i < DIGITS_NUM - 1; i++) {
+                resultDigits[i] = beforeDigits[i+1];
+            }
+        } else {
+            for (int i = 1; i < DIGITS_NUM; i++) {
+                resultDigits[i] = beforeDigits[i-1];
+            } 
+        }
+        XXVInt result = null;
+        try {
+            result = new XXVInt(resultDigits);
+        } catch(XXVException xe) {
+            // already checked
+        }
+        return result;
+    }
+
     public int intValue() {
         return this.intValue;
     }
