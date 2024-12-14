@@ -14,14 +14,14 @@ public class XXVTrees {
     public void connect(int srcIndex, int destIndex, boolean sameOrder) {
         try {
             if (!sameOrder) {
-                move(srcIndex,destIndex,stacks[srcIndex].getContentSize());
+                move(srcIndex,destIndex,_getStack(srcIndex).getContentSize());
             } else {
                 XXVStack tmp = new XXVStack();
-                while (!stacks[srcIndex].isEmpty()) {
-                    tmp.push(stacks[srcIndex].pop());
+                while (!_getStack(srcIndex).isEmpty()) {
+                    tmp.push(_getStack(srcIndex).pop());
                 }
                 while (!tmp.isEmpty()) {
-                    stacks[destIndex].push(tmp.pop());
+                    _getStack(destIndex).push(tmp.pop());
                 }
             }
         } catch(XXVException xe) {
@@ -31,12 +31,12 @@ public class XXVTrees {
 
     public void move(int srcIndex, int destIndex, int cnt) throws XXVException {
         for (int i = 0; i < cnt; i++) {
-            stacks[destIndex].push(stacks[srcIndex].pop());
+            _getStack(destIndex).push(_getStack(srcIndex).pop());
         }
     }
 
     public void sizePush(int index) throws XXVException {
-        stacks[index].push(stacks[index].getContentSize());
+        _getStack(index).push(_getStack(index).getContentSize());
     }
 
     public void next() {
@@ -56,11 +56,11 @@ public class XXVTrees {
     }
 
     public XXVInt popStack(int index) throws XXVException {
-        return this.stacks[index].pop();
+        return this._getStack(index).pop();
     }
 
     public void pushStack(XXVInt value, int index){
-        this.stacks[index].push(value);
+        this._getStack(index).push(value);
     }
 
     public void pushStack(int value, int index) throws XXVException {
@@ -68,23 +68,23 @@ public class XXVTrees {
     }
 
     public void dupStack(int cnt, int index) {
-        this.stacks[index].dup(cnt);
+        this._getStack(index).dup(cnt);
     }
 
     public void swapStack(int index) throws XXVException {
-        this.stacks[index].swap();
+        this._getStack(index).swap();
     }
 
     public void rotateStack(int depth, int index) throws XXVException {
-        this.stacks[index].rotate(depth);
+        this._getStack(index).rotate(depth);
     }
 
     public boolean stackIsEmpty(int index) {
-        return this.stacks[index].isEmpty();
+        return this._getStack(index).isEmpty();
     }
 
     public int getStackSize(int index) {
-        return this.stacks[index].getContentSize();
+        return this._getStack(index).getContentSize();
     }
 
     public void reverseFlag(int index) {
@@ -104,8 +104,7 @@ public class XXVTrees {
     }
 
     public XXVStack getStack(int index) {
-        if (this.stacks[index] == null) this.stacks[index] = new XXVStack();
-        return this.stacks[index].copy();
+        return this._getStack(index).copy();
     }
 
     public boolean[] getFlags() {
@@ -118,6 +117,11 @@ public class XXVTrees {
 
     public int getPC() {
         return this.pc;
+    }
+
+    private XXVStack _getStack(int index) {
+        if (this.stacks[index] == null) this.stacks[index] = new XXVStack();
+        return this._getStack(index);
     }
 
     public XXVTrees() {
