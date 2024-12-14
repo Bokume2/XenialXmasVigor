@@ -64,7 +64,7 @@ public class XXVTrees {
     }
 
     public void pushStack(int value, int index) throws XXVException {
-        this.stacks[index].push(value);
+        this.pushStack(new XXVInt(value),index);
     }
 
     public void dupStack(int cnt, int index) {
