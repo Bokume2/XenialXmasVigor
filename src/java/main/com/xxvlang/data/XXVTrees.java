@@ -75,8 +75,8 @@ public class XXVTrees {
         this._getStack(index).swap();
     }
 
-    public void rotateStack(int depth, int index) throws XXVException {
-        this._getStack(index).rotate(depth);
+    public void floatToTopStack(int depth, int index) throws XXVException {
+        this._getStack(index).floatToTop(depth);
     }
 
     public boolean stackIsEmpty(int index) {

@@ -36,7 +36,7 @@ public class XXVStack {
         this.push(second);
     }
 
-    public void rotate(int depth) throws XXVException {
+    public void floatToTop(int depth) throws XXVException {
         XXVStack tmpStack = new XXVStack();
         for (int i = 0; i < depth - 1; i++) {
             tmpStack.push(this.pop());
