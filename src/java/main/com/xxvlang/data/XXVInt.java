@@ -22,12 +22,12 @@ public class XXVInt {
         return add(op,false);
     }
 
-    public XXVInt sub(XXVInt op, boolean canOverflow) throws XXVException {
+    public XXVInt subtract(XXVInt op, boolean canOverflow) throws XXVException {
         return new XXVInt(this.intValue - op.intValue(),canOverflow);
     }
 
-    public XXVInt sub(XXVInt op) throws XXVException {
-        return sub(op,false);
+    public XXVInt subtract(XXVInt op) throws XXVException {
+        return subtract(op,false);
     }
 
     public XXVInt multiply(XXVInt op, boolean canOverflow, boolean quickCompute)
