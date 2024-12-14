@@ -11,9 +11,9 @@ public class XXVTrees {
 
     private int pc;
 
-    public void connect(int srcIndex, int destIndex, boolean sameOrder) {
+    public void connect(int srcIndex, int destIndex) {
         try {
-            if (!sameOrder) {
+            if (!this.getFlag(16)) {
                 move(srcIndex,destIndex,_getStack(srcIndex).getContentSize());
             } else {
                 XXVStack tmp = new XXVStack();
