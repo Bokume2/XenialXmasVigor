@@ -6,7 +6,7 @@ public class Tokenizer {
 
     public static ArrayList<ArrayList<Integer>> tokenize(String code) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        String[] codeLines = code.split("\r|\n|(\r\n)");
+        String[] codeLines = code.split("\n");
         for (String codeLine : codeLines) {
             result.add(new ArrayList<>());
             for (char c : codeLine.toUpperCase().toCharArray()) {

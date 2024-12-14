@@ -26,7 +26,7 @@ public class Parser {
     {
         ArrayList<Integer> result = new ArrayList<>();
         int treeTop = -1;
-        int l = 0;
+        int line = 0;
         for (List<Integer> tokenLine : orderedTokens) {
             if (treeTop < 0) {
                 for (int i = 0; i < tokenLine.size(); i++) {
@@ -38,17 +38,17 @@ public class Parser {
                     }
                 }
             } else {
-                l++;
-                final int VALID_TOKEN_NUM = l / 3 + l % 3 + 1;
+                line++;
+                final int VALID_TOKEN_NUM = line / 3 + line % 3 + 1;
                 final int LEAF_LEFT = treeTop - VALID_TOKEN_NUM + 1;
-                final int LEAF_RIGHT = treeTop - VALID_TOKEN_NUM + 1;
+                final int LEAF_RIGHT = treeTop + VALID_TOKEN_NUM - 1;
                 int tokenNum = 0;
                 boolean isInLeaf = false;
                 for (int i = 0; i < tokenLine.size(); i++) {
                     int token = tokenLine.get(i);
                     if (i == LEAF_LEFT) {
                         if (token < 0) {
-                            return preParseTrunk(orderedTokens,result,l,LEAF_LEFT,LEAF_RIGHT);
+                            return preParseTrunk(orderedTokens,result,line,LEAF_LEFT,LEAF_RIGHT);
                         }
                         isInLeaf = true;
                     }
@@ -100,6 +100,7 @@ public class Parser {
                         if (trunkLeft < 0) trunkLeft = j;
                     }
                 }
+                if (trunkLeft < 0) return result;
             } else {
                 ArrayList<Integer> tmpList = new ArrayList<>();
                 for (int j = trunkLeft; j <= trunkRight && j < tokenLine.size(); j++) {
