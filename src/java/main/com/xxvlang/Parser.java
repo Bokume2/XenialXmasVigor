@@ -8,7 +8,7 @@ import com.xxvlang.exception.*;
 
 public class Parser {
 
-    public static ArrayList<Statement> parse(List<List<Integer>> orderedTokens)
+    public static ArrayList<Statement> parse(ArrayList<ArrayList<Integer>> orderedTokens)
         throws XXVException
     {
         ArrayList<Integer> tokens = preParse(orderedTokens);
@@ -21,7 +21,7 @@ public class Parser {
         return result;
     }
 
-    private static ArrayList<Integer> preParse(List<List<Integer>> orderedTokens) 
+    private static ArrayList<Integer> preParse(ArrayList<ArrayList<Integer>> orderedTokens) 
         throws XXVException
     {
         ArrayList<Integer> result = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Parser {
     }
 
     private static ArrayList<Integer> preParseTrunk(
-        List<List<Integer>> orderedTokens, ArrayList<Integer> result,
+        ArrayList<ArrayList<Integer>> orderedTokens, ArrayList<Integer> result,
         final int trunkTop, final int leafLeft, final int leafRight
     ) {
         int[] trunkPlace = new int[leafRight];
