@@ -12,7 +12,11 @@ public class XXVException extends Exception {
 
     /* for Statement */
     public static final String MESSAGE_IMPL_ERROR =
-        "Implementation error: Wrong usage of class";
+        "Implementation error: Wrong usage of class.";
+
+    /* for Parser */
+    public static final String MESSAGE_SYNTAX_ERROR =
+        "Syntax error: Some syntax of the XXV code are wrong.";
 
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =

@@ -1,6 +1,9 @@
 package com.xxvlang.exception;
 
 public enum XXVExceptionType {
+
+    /* for Parser */
+    SYNTAX_ERROR(XXVException.MESSAGE_SYNTAX_ERROR),
     
     /* for XXVInt */
     OVERFLOW(XXVException.MESSAGE_OVERFLOW),
