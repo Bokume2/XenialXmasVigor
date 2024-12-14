@@ -21,4 +21,12 @@ public record Statement(
         this.instruction = instruction;
         this.target = target;
     }
+
+    @Override
+    public String toString() {
+        char subjectChar = (char)(this.subject != 0 ? this.subject + 'A' - 1 : 'Z');
+        char instructionChar = (char)(this.instruction != 0 ? this.instruction + 'A' - 1 : 'Z');
+        char targetChar = (char)(this.target != 0 ? this.target + 'A' - 1 : 'Z');
+        return "[" + subjectChar + instructionChar + targetChar + "]";
+    }
 }
