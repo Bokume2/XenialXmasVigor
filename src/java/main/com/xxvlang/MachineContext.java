@@ -14,6 +14,13 @@ public class MachineContext {
     public void connect(Statement statement, XXVTrees trees) throws XXVException {
         trees.connect(statement.target(),statement.subject());
     }
+
+    public void addDigit(Statement statement, XXVTrees trees) throws XXVException {
+        trees.pushStack(
+            trees.popStack(statement.subject()).shift(1).add(new XXVInt(statement.target())),
+            statement.subject()
+        );
+    } 
     
     public MachineContext(ArrayList<Statement> program) {
         this.program = program;
