@@ -11,10 +11,18 @@ public class XXVTrees {
 
     private int pc;
 
-    public void connect(int srcIndex, int destIndex) {
+    public void connect(int subject, int target) {
+        int srcIndex, destIndex;
+        if (this.getFlag(8)) {
+            srcIndex = subject;
+            destIndex = target;
+        } else {
+            srcIndex = target;
+            destIndex = subject;
+        }
         try {
             if (!this.getFlag(16)) {
-                move(srcIndex,destIndex,_getStack(srcIndex).getContentSize());
+                move(subject,target,_getStack(srcIndex).getContentSize());
             } else {
                 XXVStack tmp = new XXVStack();
                 while (!_getStack(srcIndex).isEmpty()) {
@@ -29,7 +37,15 @@ public class XXVTrees {
         }
     }
 
-    public void move(int srcIndex, int destIndex, int cnt) throws XXVException {
+    public void move(int subject, int target, int cnt) throws XXVException {
+        int srcIndex, destIndex;
+        if (this.getFlag(8)) {
+            srcIndex = subject;
+            destIndex = target;
+        } else {
+            srcIndex = target;
+            destIndex = subject;
+        }
         for (int i = 0; i < cnt; i++) {
             _getStack(destIndex).push(_getStack(srcIndex).pop());
         }

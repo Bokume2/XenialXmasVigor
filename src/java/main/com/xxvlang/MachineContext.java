@@ -12,7 +12,7 @@ public class MachineContext {
     private XXVTrees trees;
 
     public void connect(Statement statement, XXVTrees trees) throws XXVException {
-        trees.connect(statement.target(),statement.subject());
+        trees.connect(statement.subject(),statement.target());
     }
 
     public void addDigit(Statement statement, XXVTrees trees) throws XXVException {
