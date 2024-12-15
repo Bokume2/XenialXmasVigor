@@ -2,7 +2,10 @@ package com.xxvlang.data;
 
 import java.util.Arrays;
 
+import com.xxvlang.XXVFlag;
 import com.xxvlang.exception.*;
+
+import static com.xxvlang.XXVFlag.*;
 
 public class XXVTrees {
 
@@ -13,7 +16,7 @@ public class XXVTrees {
 
     public void connect(int subject, int target) {
         int srcIndex, destIndex;
-        if (this.getFlag(8)) {
+        if (this.getFlag(MOVE_TARGET_REVERSE)) {
             srcIndex = subject;
             destIndex = target;
         } else {
@@ -21,7 +24,7 @@ public class XXVTrees {
             destIndex = subject;
         }
         try {
-            if (!this.getFlag(16)) {
+            if (!this.getFlag(CONNECT_IN_SAME_ORDER)) {
                 move(subject,target,_getStack(srcIndex).getContentSize());
             } else {
                 XXVStack tmp = new XXVStack();
@@ -39,7 +42,7 @@ public class XXVTrees {
 
     public void move(int subject, int target, int cnt) throws XXVException {
         int srcIndex, destIndex;
-        if (this.getFlag(8)) {
+        if (this.getFlag(MOVE_TARGET_REVERSE)) {
             srcIndex = subject;
             destIndex = target;
         } else {
@@ -103,8 +106,8 @@ public class XXVTrees {
         return this._getStack(index).getContentSize();
     }
 
-    public void reverseFlag(int index) {
-        this.flags[index] = !this.flags[index];
+    public void reverseFlag(XXVFlag flag) {
+        this.flags[flag.getIndex()] = !this.flags[flag.getIndex()];
     }
 
     public void setStack(XXVStack stack, int index) {
@@ -115,8 +118,8 @@ public class XXVTrees {
         this.pc = value;
     }
 
-    public boolean getFlag(int index) {
-        return this.flags[index];
+    public boolean getFlag(XXVFlag flag) {
+        return this.flags[flag.getIndex()];
     }
 
     public XXVStack getStack(int index) {

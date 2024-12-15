@@ -6,6 +6,8 @@ import com.xxvlang.statement.Statement;
 import com.xxvlang.data.*;
 import com.xxvlang.exception.*;
 
+import static com.xxvlang.XXVFlag.*;
+
 public class MachineContext {
 
     private ArrayList<Statement> program;
@@ -26,7 +28,7 @@ public class MachineContext {
         byte[] resultBytes = new byte[XXVInt.DIGITS_NUM];
         byte[] beforeBytes = trees.popStack(statement.subject()).getDigits();
         int index = statement.target();
-        if (trees.getFlag(7)) index %= XXVInt.DIGITS_NUM;
+        if (trees.getFlag(DIGIT_ARG_AS_MOD)) index %= XXVInt.DIGITS_NUM;
         else if (index >= XXVInt.DIGITS_NUM)
             throw new XXVException(XXVExceptionType.ILLEGAL_ARGUMENT);
         resultBytes[index] = beforeBytes[index];
