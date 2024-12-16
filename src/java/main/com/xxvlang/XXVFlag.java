@@ -2,14 +2,15 @@ package com.xxvlang;
 
 public enum XXVFlag {
 
-    DIGIT_ARG_AS_MOD(7,'G',"digitArgAsMod"),
-    MOVE_TARGET_REVERSE(8,'H',"moveTargetReverse"),
-    CONNECT_IN_SAME_ORDER(16,'P',"connectInSameOrder"),
-    IS_XMAS(24,'X',"isXmas");
+    ARITH_ARG_AS_STACK(1,'A'),
+    CONNECT_IN_SAME_ORDER(2,'B'),
+    OUTPUT_AS_CHAR(3,'C'),
+    DIGIT_ARG_AS_MOD(7,'G'),
+    MOVE_TARGET_REVERSE(8,'H'),
+    IS_XMAS(24,'X');
     
     private int index;
     private char xxvDigit;
-    private String name;
 
     public int getIndex() {
         return this.index;
@@ -19,14 +20,9 @@ public enum XXVFlag {
         return this.xxvDigit;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    private XXVFlag(int index, char xxvDigit, String name) {
+    private XXVFlag(int index, char xxvDigit) {
         this.index = index;
         this.xxvDigit = xxvDigit;
-        this.name = name;
     }
 
 }
