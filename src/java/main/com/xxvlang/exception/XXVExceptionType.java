@@ -7,6 +7,7 @@ public enum XXVExceptionType {
 
     /* for MachineContext */
     ILLEGAL_ARGUMENT(XXVException.MESSAGE_ILLEGAL_ARGUMENT),
+    IS_NOT_XMAS(XXVException.MESSAGE_IS_NOT_XMAS),
     
     /* for XXVInt */
     OVERFLOW(XXVException.MESSAGE_OVERFLOW),

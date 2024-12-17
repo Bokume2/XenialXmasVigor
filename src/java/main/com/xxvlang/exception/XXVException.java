@@ -21,6 +21,8 @@ public class XXVException extends Exception {
     /* for MachineContext */
     public static final String MESSAGE_ILLEGAL_ARGUMENT =
         "Error: An instruction is given an illegal argument.";
+    public static final String MESSAGE_IS_NOT_XMAS =
+        "Critical error: You told me a lie! Today is not Christmas!";
     
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
