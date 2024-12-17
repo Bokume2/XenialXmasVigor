@@ -18,8 +18,18 @@ public class MachineContext {
     }
 
     public void addDigit(Statement statement, XXVTrees trees) throws XXVException {
+        XXVInt addedDigit;
+        if (
+            !trees.getFlag(LITERAL_TO_STACK) || 
+            trees.stackIsEmpty(statement.target()) && trees.getFlag(CAN_FALLBACK_ARG)
+        ) {
+            addedDigit = new XXVInt(statement.target());
+        } else {
+            addedDigit = trees.popStack(statement.target());
+        }
+        
         trees.pushStack(
-            trees.popStack(statement.subject()).shift(1).add(new XXVInt(statement.target())),
+            trees.popStack(statement.subject()).shift(1).add(addedDigit),
             statement.subject()
         );
     }
@@ -27,10 +37,22 @@ public class MachineContext {
     public void extractDigit(Statement statement, XXVTrees trees) throws XXVException {
         byte[] resultBytes = new byte[XXVInt.DIGITS_NUM];
         byte[] beforeBytes = trees.popStack(statement.subject()).getDigits();
-        int index = statement.target();
-        if (trees.getFlag(DIGIT_ARG_AS_MOD)) index %= XXVInt.DIGITS_NUM;
-        else if (index >= XXVInt.DIGITS_NUM)
+        int index;
+        if (
+            !trees.getFlag(LITERAL_TO_STACK) || 
+            trees.stackIsEmpty(statement.target()) && trees.getFlag(CAN_FALLBACK_ARG)
+        ) {
+            index = statement.target();
+        } else {
+            index = trees.popStack(statement.target()).intValue();
+        }
+
+        if (trees.getFlag(DIGIT_ARG_AS_MOD)) {
+            index %= XXVInt.DIGITS_NUM;
+        } else if (index >= XXVInt.DIGITS_NUM) {
             throw new XXVException(XXVExceptionType.ILLEGAL_ARGUMENT);
+        }
+        
         resultBytes[index] = beforeBytes[index];
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
     }

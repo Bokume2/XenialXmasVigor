@@ -107,7 +107,11 @@ public class XXVTrees {
     }
 
     public void reverseFlag(XXVFlag flag) {
-        this.flags[flag.getIndex()] = !this.flags[flag.getIndex()];
+        this.reverseFlag(flag.getIndex());
+    }
+
+    public void reverseFlag(int index) {
+        this.flags[index] = !this.flags[index];
     }
 
     public void setStack(XXVStack stack, int index) {
