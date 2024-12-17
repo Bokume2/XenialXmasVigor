@@ -87,7 +87,15 @@ public class XXVTrees {
     }
 
     public void dupStack(int cnt, int index) {
-        this._getStack(index).dup(cnt);
+        if (this.getFlag(DUP_IN_RANGE)) {
+            int size = this.getStackSize(index);
+            XXVInt[] tmpArray = this._getStack(index).getContent().toArray(new XXVInt[size]);
+            for (int i = cnt - 1; i >= 0; i--) {
+                this.pushStack(tmpArray[i],index);
+            }
+        } else {
+            this._getStack(index).dup(cnt);
+        }
     }
 
     public void swapStack(int index) throws XXVException {
