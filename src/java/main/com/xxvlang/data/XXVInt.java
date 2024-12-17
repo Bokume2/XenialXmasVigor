@@ -171,10 +171,10 @@ public class XXVInt {
     public XXVInt(int intValue, boolean canOverflow) throws XXVException {
         if (intValue > MAX_VALUE || intValue < MIN_VALUE) {
             if (canOverflow) {
-                while (intValue >= MAX_VALUE) {
+                while (intValue > MAX_VALUE) {
                     intValue -= MAX_VALUE + 1;
                 }
-                while (intValue <= MIN_VALUE) {
+                while (intValue < MIN_VALUE) {
                     intValue += MAX_VALUE + 1;
                 }
             } else {
