@@ -18,6 +18,10 @@ public class XXVException extends Exception {
     public static final String MESSAGE_SYNTAX_ERROR =
         "Syntax error: Some syntax of the XXV code are wrong.";
 
+    /* for MachineContext */
+    public static final String MESSAGE_ILLEGAL_ARGUMENT =
+        "Error: An instruction is given an illegal argument.";
+    
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
         "Error: A cell overflowed without option.";

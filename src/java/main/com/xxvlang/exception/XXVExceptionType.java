@@ -4,6 +4,9 @@ public enum XXVExceptionType {
 
     /* for Parser */
     SYNTAX_ERROR(XXVException.MESSAGE_SYNTAX_ERROR),
+
+    /* for MachineContext */
+    ILLEGAL_ARGUMENT(XXVException.MESSAGE_ILLEGAL_ARGUMENT),
     
     /* for XXVInt */
     OVERFLOW(XXVException.MESSAGE_OVERFLOW),
