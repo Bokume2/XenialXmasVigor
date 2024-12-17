@@ -123,6 +123,16 @@ public class XXVInt {
         return result;
     }
 
+    public XXVInt negate() {
+        XXVInt result = null;
+        try {
+            result = new XXVInt(-this.intValue);
+        } catch(XXVException xe) {
+            // already checked
+        }
+        return result;
+    }
+
     public int intValue() {
         return this.intValue;
     }

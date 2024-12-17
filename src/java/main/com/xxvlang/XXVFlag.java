@@ -18,6 +18,7 @@ public enum XXVFlag {
     JUMP_WHEN_NEGATIVE(13,'M'),
     IS_END(14,'N'),
     CAN_OVERFLOW(15,'O'),
+    PUSH_NEGATIVE(16,'P'),
     QUICK_COMPUTE(17,'Q'),
     PC_PUSH_WHEN_JUMP(18,'R'),
     OUTPUT_AS_STRING(19,'O'),

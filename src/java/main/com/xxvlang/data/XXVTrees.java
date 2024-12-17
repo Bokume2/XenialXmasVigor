@@ -78,8 +78,12 @@ public class XXVTrees {
         return this._getStack(index).pop();
     }
 
-    public void pushStack(XXVInt value, int index){
-        this._getStack(index).push(value);
+    public void pushStack(XXVInt value, int index) {
+        if (this.getFlag(PUSH_NEGATIVE)) {
+            this._getStack(index).push(value.negate());
+        } else {
+            this._getStack(index).push(value);
+        }
     }
 
     public void pushStack(int value, int index) throws XXVException {
