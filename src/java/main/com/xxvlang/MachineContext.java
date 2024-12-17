@@ -13,19 +13,16 @@ public class MachineContext {
     private ArrayList<Statement> program;
     private XXVTrees trees;
 
-    public void connect(Statement statement, XXVTrees trees) throws XXVException {
+    public static void connect(Statement statement, XXVTrees trees) throws XXVException {
         trees.connect(statement.subject(),statement.argument());
     }
 
-    public void addDigit(Statement statement, XXVTrees trees) throws XXVException {
+    public static void addDigit(Statement statement, XXVTrees trees) throws XXVException {
         XXVInt addedDigit;
-        if (
-            !trees.getFlag(LITERAL_TO_STACK) || 
-            trees.stackIsEmpty(statement.argument()) && trees.getFlag(CAN_FALLBACK_ARG)
-        ) {
-            addedDigit = new XXVInt(statement.argument());
-        } else {
+        if (canUse_ToStack(LITERAL_TO_STACK,statement.argument(),trees)) {
             addedDigit = trees.popStack(statement.argument());
+        } else {
+            addedDigit = new XXVInt(statement.argument());
         }
         
         trees.pushStack(
@@ -34,17 +31,14 @@ public class MachineContext {
         );
     }
 
-    public void extractDigit(Statement statement, XXVTrees trees) throws XXVException {
+    public static void extractDigit(Statement statement, XXVTrees trees) throws XXVException {
         byte[] resultBytes = new byte[XXVInt.DIGITS_NUM];
         byte[] beforeBytes = trees.popStack(statement.subject()).getDigits();
         int index;
-        if (
-            !trees.getFlag(LITERAL_TO_STACK) || 
-            trees.stackIsEmpty(statement.argument()) && trees.getFlag(CAN_FALLBACK_ARG)
-        ) {
-            index = statement.argument();
-        } else {
+        if (canUse_ToStack(LITERAL_TO_STACK,statement.argument(),trees)) {
             index = trees.popStack(statement.argument()).intValue();
+        } else {
+            index = statement.argument();
         }
 
         if (trees.getFlag(DIGIT_ARG_AS_MOD)) {
@@ -55,6 +49,13 @@ public class MachineContext {
         
         resultBytes[index] = beforeBytes[index];
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
+    }
+
+    private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {
+        return (
+            trees.getFlag(flag) &&
+            !trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG)
+        );
     }
     
     public MachineContext(ArrayList<Statement> program) {
