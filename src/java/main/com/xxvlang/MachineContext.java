@@ -54,6 +54,36 @@ public class MachineContext {
         );
     }
 
+    public static void divide(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).divide(new XXVInt(arg),trees.getFlag(CAN_OVERFLOW));
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.divide(opr,trees.getFlag(CAN_OVERFLOW)),sub);
+    }
+
+    public static void exponentiate(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).exponentiate(
+                new XXVInt(arg),trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
+            );
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.exponentiate(
+            opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
+        ),sub);
+    }
+
     public static void extractDigit(Statement statement, XXVTrees trees) throws XXVException {
         byte[] resultBytes = new byte[XXVInt.DIGITS_NUM];
         byte[] beforeBytes = trees.popStack(statement.subject()).getDigits();
@@ -72,6 +102,49 @@ public class MachineContext {
         
         resultBytes[index] = beforeBytes[index];
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
+    }
+
+    public static void multiply(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).multiply(
+                new XXVInt(arg),trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
+            );
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.multiply(
+            opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
+        ),sub);
+    }
+
+    public static void modulo(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).modulo(new XXVInt(arg),trees.getFlag(CAN_OVERFLOW));
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.modulo(opr,trees.getFlag(CAN_OVERFLOW)),sub);
+    }
+
+    public static void subtract(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).subtract(new XXVInt(arg),trees.getFlag(CAN_OVERFLOW));
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.subtract(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
 
     private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {
