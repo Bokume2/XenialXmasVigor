@@ -13,6 +13,16 @@ public class MachineContext {
     private ArrayList<Statement> program;
     private XXVTrees trees;
 
+    public static void pushZero(Statement statement, XXVTrees trees) {
+        for (int i = 0; i < statement.argument(); i++) {
+            try {
+                trees.pushStack(new XXVInt(0),statement.subject());
+            } catch (XXVException xe) {
+                // never thrown exception
+            }
+        }
+    }
+
     public static void connect(Statement statement, XXVTrees trees) throws XXVException {
         trees.connect(statement.subject(),statement.argument());
     }
