@@ -118,7 +118,7 @@ public class XXVInt {
         try {
             result = new XXVInt(resultDigits);
         } catch(XXVException xe) {
-            // already checked
+            // never thrown exception
         }
         return result;
     }
@@ -128,7 +128,7 @@ public class XXVInt {
         try {
             result = new XXVInt(-this.intValue);
         } catch(XXVException xe) {
-            // already checked
+            // never thrown exception
         }
         return result;
     }

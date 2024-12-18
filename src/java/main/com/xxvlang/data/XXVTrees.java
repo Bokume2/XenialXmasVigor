@@ -36,7 +36,7 @@ public class XXVTrees {
                 }
             }
         } catch(XXVException xe) {
-            //already checked
+            // never thrown exception
         }
     }
 
