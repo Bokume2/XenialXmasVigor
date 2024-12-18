@@ -23,6 +23,19 @@ public class MachineContext {
         }
     }
 
+    public static void add(Statement statement, XXVTrees trees) throws XXVException {
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt opl, opr;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            opl = trees.popStack(sub);
+            opr = trees.popStack(arg);
+        } else {
+            opr = trees.popStack(sub).add(new XXVInt(arg));
+            opl = trees.popStack(sub);
+        }
+        trees.pushStack(opl.add(opr),sub);
+    }
+
     public static void connect(Statement statement, XXVTrees trees) throws XXVException {
         trees.connect(statement.subject(),statement.argument());
     }
