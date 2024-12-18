@@ -30,10 +30,10 @@ public class MachineContext {
             opl = trees.popStack(sub);
             opr = trees.popStack(arg);
         } else {
-            opr = trees.popStack(sub).add(new XXVInt(arg));
+            opr = trees.popStack(sub).add(new XXVInt(arg),trees.getFlag(CAN_OVERFLOW));
             opl = trees.popStack(sub);
         }
-        trees.pushStack(opl.add(opr),sub);
+        trees.pushStack(opl.add(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
 
     public static void connect(Statement statement, XXVTrees trees) throws XXVException {

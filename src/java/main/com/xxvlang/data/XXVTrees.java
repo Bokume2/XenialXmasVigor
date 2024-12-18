@@ -87,7 +87,7 @@ public class XXVTrees {
     }
 
     public void pushStack(int value, int index) throws XXVException {
-        this.pushStack(new XXVInt(value),index);
+        this.pushStack(new XXVInt(value,this.getFlag(CAN_OVERFLOW)),index);
     }
 
     public void dupStack(int cnt, int index) {
