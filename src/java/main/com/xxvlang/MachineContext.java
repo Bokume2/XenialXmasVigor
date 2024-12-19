@@ -159,7 +159,10 @@ public class MachineContext {
     }
 
     public static void trash(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int cnt = calcLiteralArg(statement.argument(),trees).intValue();
+        for (int i = 0; i < cnt; i++) {
+            trees.popStack(statement.subject());
+        }
     }
 
     public static void pushRandom(Statement statement, XXVTrees trees) throws XXVException {
