@@ -147,7 +147,9 @@ public class MachineContext {
     }
 
     public static void floatToTop(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        trees.floatToTopStack(
+            calcLiteralArg(statement.argument(),trees).intValue(),statement.subject()
+        );
     }
 
     public static void subtract(Statement statement, XXVTrees trees) throws XXVException {
