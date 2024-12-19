@@ -104,6 +104,30 @@ public class MachineContext {
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
     }
 
+    public static void move(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void helloworld(Statement statement, XXVTrees trees) {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void input(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void jump(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void shift(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void pushPC(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
     public static void multiply(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject(), arg = statement.argument();
         XXVInt opl, opr;
@@ -121,6 +145,18 @@ public class MachineContext {
         ),sub);
     }
 
+    public static void reverseFlag(Statement statement, XXVTrees trees) {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void output(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void push(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
     public static void modulo(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject(), arg = statement.argument();
         XXVInt opl, opr;
@@ -134,6 +170,10 @@ public class MachineContext {
         trees.pushStack(opl.modulo(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
 
+    public static void floatToTop(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
     public static void subtract(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject(), arg = statement.argument();
         XXVInt opl, opr;
@@ -145,6 +185,26 @@ public class MachineContext {
             opl = trees.popStack(sub);
         }
         trees.pushStack(opl.subtract(opr,trees.getFlag(CAN_OVERFLOW)),sub);
+    }
+
+    public static void trash(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void pushRandom(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void pushSize(Statement statement, XXVTrees trees) {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void dup(Statement statement, XXVTrees trees) throws XXVException {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    public static void merrychristmas(Statement statement, XXVTrees trees) {
+        throw new UnsupportedOperationException("Critical Error: Not implemented.");
     }
 
     private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {
