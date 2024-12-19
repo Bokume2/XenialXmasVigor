@@ -101,18 +101,15 @@ public class XXVInt {
         return exponentiate(op,false);
     }
 
-    public XXVInt shift(int length) {
+    public XXVInt shift(int length) throws XXVException {
+        if (length >= DIGITS_NUM || length <= -DIGITS_NUM)
+            throw new XXVException(XXVExceptionType.ILLEGAL_SHIFT_LENGTH);
         if (length == 0) return this;
-        byte[] beforeDigits = this.digits;
         byte[] resultDigits = new byte[DIGITS_NUM];
-        if (length > 0) {
-            for (int i = 0; i < DIGITS_NUM - 1; i++) {
-                resultDigits[i] = beforeDigits[i+1];
+        for (int i = 0; i < DIGITS_NUM - 1; i++) {
+            if (i - length >= 0 && i - length < DIGITS_NUM) {
+                resultDigits[i - length] = this.digits[i];
             }
-        } else {
-            for (int i = 1; i < DIGITS_NUM; i++) {
-                resultDigits[i] = beforeDigits[i-1];
-            } 
         }
         XXVInt result = null;
         try {

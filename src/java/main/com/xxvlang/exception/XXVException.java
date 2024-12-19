@@ -41,6 +41,8 @@ public class XXVException extends Exception {
         "Error: Casting from int to char failed.";
     public static final String MESSAGE_ZERO_DEVIDE =
         "Arithmetic Error: You devided some number by 0(Z).";
+    public static final String MESSAGE_ILLEGAL_SHIFT_LENGTH =
+        "Error: You can shift XXVInt only 5 digits to either left or right.";
 
     /* for XXVStack */
     public static final String MESSAGE_STACK_EMPTY =
