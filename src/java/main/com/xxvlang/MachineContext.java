@@ -31,7 +31,7 @@ public class MachineContext {
     public static void add(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.add(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -51,7 +51,7 @@ public class MachineContext {
     public static void divide(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.divide(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -59,7 +59,7 @@ public class MachineContext {
     public static void exponentiate(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.exponentiate(
             opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
@@ -116,7 +116,7 @@ public class MachineContext {
     public static void multiply(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.multiply(
             opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
@@ -138,7 +138,7 @@ public class MachineContext {
     public static void modulo(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.modulo(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -152,7 +152,7 @@ public class MachineContext {
     public static void subtract(Statement statement, XXVTrees trees) throws XXVException {
         int sub = statement.subject();
         XXVInt offset = calcOffsetArg(statement.argument(),trees);
-        XXVInt opr = trees.popStack(sub).add(offset);
+        XXVInt opr = trees.popStack(sub).add(offset,trees.getFlag(CAN_OVERFLOW));
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.subtract(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
