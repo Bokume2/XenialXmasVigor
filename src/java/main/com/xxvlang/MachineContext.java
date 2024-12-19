@@ -230,6 +230,7 @@ public class MachineContext {
                 checkXmas();
             }
             exec(program.get(trees.getPC()),trees);
+            trees.next();
         }
     }
 
