@@ -111,13 +111,7 @@ public class XXVInt {
                 resultDigits[i - length] = this.digits[i];
             }
         }
-        XXVInt result = null;
-        try {
-            result = new XXVInt(resultDigits);
-        } catch(XXVException xe) {
-            // never thrown exception
-        }
-        return result;
+        return new XXVInt(resultDigits);
     }
 
     public XXVInt negate() {
