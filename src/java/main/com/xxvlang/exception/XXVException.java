@@ -19,6 +19,8 @@ public class XXVException extends Exception {
         "Syntax error: Some syntax of the XXV code are wrong.";
 
     /* for MachineContext */
+    public static final String MESSAGE_WRONG_IMPL =
+        "Implementation Error: Wrong usage of internal method.";
     public static final String MESSAGE_ILLEGAL_ARGUMENT =
         "Error: An instruction is given an illegal argument.";
     public static final String MESSAGE_IS_NOT_XMAS =
