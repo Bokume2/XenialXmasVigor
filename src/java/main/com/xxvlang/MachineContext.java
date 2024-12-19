@@ -83,8 +83,16 @@ public class MachineContext {
         trees.move(statement.subject(),statement.argument(),1);
     }
 
-    public static void helloworld(Statement statement, XXVTrees trees) {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    public static void helloworld(Statement statement, XXVTrees trees) throws XXVException {
+        int cnt = calcLiteralArg(statement.argument(),trees).intValue();
+        String hw = "Hello,world!";
+        if (trees.getFlag(PUSH_PHRASE_WITH_LF)) hw += '\n';
+        int i = 0;
+        for (char c : hw.toCharArray()) {
+            if (i >= cnt) break;
+            trees.pushStack(new XXVInt(c),statement.subject());
+            i++;
+        }
     }
 
     public static void input(Statement statement, XXVTrees trees) throws XXVException {
