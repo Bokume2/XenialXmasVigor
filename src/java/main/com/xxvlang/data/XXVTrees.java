@@ -183,7 +183,7 @@ public class XXVTrees {
 
     private XXVStack _getStack(int index) {
         if (this.stacks[index] == null) this.stacks[index] = new XXVStack();
-        return this._getStack(index);
+        return this.stacks[index];
     }
 
     public XXVTrees() {
