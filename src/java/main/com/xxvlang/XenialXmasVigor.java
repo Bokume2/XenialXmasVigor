@@ -54,15 +54,19 @@ public class XenialXmasVigor {
     public static final int ERR_CODE_OTHER = 10;
     
     public static void main(String args[]) {
+        _entryPoint(args,MESSAGE_USAGE);
+    }
+
+    public static void _entryPoint(String[] args, String usage) {
         if (args.length < 1) {
             System.err.println(XXVException.MESSAGE_SHORT_ARGUMENT);
             System.err.println();
-            System.err.println(MESSAGE_USAGE);
+            System.err.println(usage);
             System.exit(ERR_CODE_SHORT_ARGUMENT);
         } else if (args.length > 1) {
             System.err.println(XXVException.MESSAGE_TOO_MUCH_ARGUMENT);
             System.err.println();
-            System.err.println(MESSAGE_USAGE);
+            System.err.println(usage);
             System.exit(ERR_CODE_TOO_MUCH_ARGUMENT);
         }
 
