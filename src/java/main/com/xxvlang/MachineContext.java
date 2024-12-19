@@ -29,14 +29,9 @@ public class MachineContext {
     }
 
     public static void add(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.add(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -46,13 +41,7 @@ public class MachineContext {
     }
 
     public static void addDigit(Statement statement, XXVTrees trees) throws XXVException {
-        XXVInt addedDigit;
-        if (canUse_ToStack(LITERAL_TO_STACK,statement.argument(),trees)) {
-            addedDigit = trees.popStack(statement.argument());
-        } else {
-            addedDigit = new XXVInt(statement.argument());
-        }
-        
+        XXVInt addedDigit = calcLiteralArg(statement.argument(),trees);
         trees.pushStack(
             trees.popStack(statement.subject()).shift(1).add(addedDigit),
             statement.subject()
@@ -60,27 +49,17 @@ public class MachineContext {
     }
 
     public static void divide(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.divide(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
 
     public static void exponentiate(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.exponentiate(
             opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
@@ -90,19 +69,12 @@ public class MachineContext {
     public static void extractDigit(Statement statement, XXVTrees trees) throws XXVException {
         byte[] resultBytes = new byte[XXVInt.DIGITS_NUM];
         byte[] beforeBytes = trees.popStack(statement.subject()).getDigits();
-        int index;
-        if (canUse_ToStack(LITERAL_TO_STACK,statement.argument(),trees)) {
-            index = trees.popStack(statement.argument()).intValue();
-        } else {
-            index = statement.argument();
-        }
-
+        int index = calcLiteralArg(statement.argument(),trees).intValue();
         if (trees.getFlag(DIGIT_ARG_AS_MOD)) {
             index %= XXVInt.DIGITS_NUM;
         } else if (index >= XXVInt.DIGITS_NUM) {
             throw new XXVException(XXVExceptionType.ILLEGAL_ARGUMENT);
         }
-        
         resultBytes[index] = beforeBytes[index];
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
     }
@@ -128,25 +100,13 @@ public class MachineContext {
     }
 
     public static void pushPC(Statement statement, XXVTrees trees) throws XXVException {
-        int arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        trees.pushPC(statement.subject(),offset);
+        trees.pushPC(statement.subject(),calcOffsetArg(statement.argument(),trees).intValue());
     }
 
     public static void multiply(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.multiply(
             opr,trees.getFlag(CAN_OVERFLOW),trees.getFlag(QUICK_COMPUTE)
@@ -162,25 +122,13 @@ public class MachineContext {
     }
 
     public static void push(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        XXVInt value;
-        if (canUse_ToStack(LITERAL_TO_STACK,arg,trees)) {
-            value = trees.popStack(arg);
-        } else {
-            value = new XXVInt(arg);
-        }
-        trees.pushStack(value,sub);
+        trees.pushStack(calcLiteralArg(statement.argument(),trees),statement.subject());
     }
 
     public static void modulo(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.modulo(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -190,14 +138,9 @@ public class MachineContext {
     }
 
     public static void subtract(Statement statement, XXVTrees trees) throws XXVException {
-        int sub = statement.subject(), arg = statement.argument();
-        int offset;
-        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
-            offset = trees.popStack(arg).intValue();
-        } else {
-            offset = arg;
-        }
-        XXVInt opr = trees.popStack(sub).add(new XXVInt(offset));
+        int sub = statement.subject();
+        XXVInt offset = calcOffsetArg(statement.argument(),trees);
+        XXVInt opr = trees.popStack(sub).add(offset);
         XXVInt opl = trees.popStack(sub);
         trees.pushStack(opl.subtract(opr,trees.getFlag(CAN_OVERFLOW)),sub);
     }
@@ -233,6 +176,22 @@ public class MachineContext {
             trees.getFlag(flag) &&
             (!trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG))
         );
+    }
+
+    private static XXVInt calcOffsetArg(int arg, XXVTrees trees) throws XXVException {
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            return trees.popStack(arg);
+        } else {
+            return new XXVInt(arg);
+        }
+    }
+
+    private static XXVInt calcLiteralArg(int arg, XXVTrees trees) throws XXVException {
+        if (canUse_ToStack(LITERAL_TO_STACK,arg,trees)) {
+            return trees.popStack(arg);
+        } else {
+            return new XXVInt(arg);
+        }
     }
 
     public void run() throws XXVException {
