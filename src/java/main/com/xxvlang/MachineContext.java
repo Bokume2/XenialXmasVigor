@@ -151,7 +151,7 @@ public class MachineContext {
     }
 
     public static void reverseFlag(Statement statement, XXVTrees trees) {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        trees.reverseFlag(statement.argument());
     }
 
     public static void output(Statement statement, XXVTrees trees) throws XXVException {
