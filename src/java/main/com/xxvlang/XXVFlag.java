@@ -24,6 +24,7 @@ public enum XXVFlag {
     OUTPUT_AS_STRING(19,'O'),
     TRIM_INPUT(20,'T'),
     CAN_FALLBACK_ARG(21,'U'),
+    DIVIDE_INPUT_AS_BYTES(22,'V'),
     DUP_IN_RANGE(23,'W'),
     IS_XMAS(24,'X');
     
