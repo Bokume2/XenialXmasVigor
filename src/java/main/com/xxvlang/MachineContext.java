@@ -159,7 +159,14 @@ public class MachineContext {
     }
 
     public static void push(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int sub = statement.subject(), arg = statement.argument();
+        XXVInt value;
+        if (canUse_ToStack(LITERAL_TO_STACK,arg,trees)) {
+            value = trees.popStack(arg);
+        } else {
+            value = new XXVInt(arg);
+        }
+        trees.pushStack(value,sub);
     }
 
     public static void modulo(Statement statement, XXVTrees trees) throws XXVException {
