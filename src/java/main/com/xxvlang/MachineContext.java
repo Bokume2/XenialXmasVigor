@@ -3,6 +3,8 @@ package com.xxvlang;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Random;
+
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.Month;
@@ -165,7 +167,8 @@ public class MachineContext {
     }
 
     public static void pushRandom(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int range = calcLiteralArg(statement.argument(),trees).intValue();
+        trees.pushStack(new Random().nextInt(range),statement.subject());
     }
 
     public static void pushSize(Statement statement, XXVTrees trees) throws XXVException {
