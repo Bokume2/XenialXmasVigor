@@ -92,7 +92,18 @@ public class MachineContext {
     }
 
     public static void jump(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        boolean condition;
+        if (trees.stackIsEmpty(statement.subject()) && trees.getFlag(JUMP_WHEN_EMPTY)) {
+            condition = true;
+        } else {
+            int criteria = trees.popStack(statement.subject()).intValue();
+            condition = (
+               criteria > 0 && !trees.getFlag(JUMP_WHEN_NEGATIVE) ||
+               criteria < 0 && trees.getFlag(JUMP_WHEN_NEGATIVE)
+            );
+        }
+        if (trees.getFlag(REVERSE_JUMP_CONDITION)) condition = !condition;
+        if (condition) trees.setPC(trees.popStack(statement.argument()).intValue());
     }
 
     public static void shift(Statement statement, XXVTrees trees) throws XXVException {
