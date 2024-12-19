@@ -5,6 +5,7 @@ import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.io.FileNotFoundException;
 import java.nio.file.NoSuchFileException;
 
@@ -68,6 +69,8 @@ public class XenialXmasVigor {
         try {
             String code = Files.readString(Path.of(args[0]));
             ArrayList<Statement> program = Parser.parse(Tokenizer.tokenize(code));
+            MachineContext context = new MachineContext(program);
+            context.run();
         } catch (FileNotFoundException fn) {
             System.err.println(XXVException.MESSAGE_FILE_NOT_FOUND);
             System.exit(ERR_CODE_FILE_NOT_FOUND);

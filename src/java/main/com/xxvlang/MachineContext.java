@@ -1,11 +1,11 @@
 package com.xxvlang;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.Month;
-import java.time.MonthDay;
 
 import com.xxvlang.statement.Statement;
 import com.xxvlang.data.*;
@@ -223,6 +223,23 @@ public class MachineContext {
             trees.getFlag(flag) &&
             !trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG)
         );
+    }
+
+    public void run() throws XXVException {
+        run(this.program,this.trees);
+    }
+
+    public static void run(List<Statement> program, XXVTrees trees) throws XXVException {
+        while (!trees.getFlag(IS_END) && trees.getPC() < program.size()) {
+            if (trees.getFlag(IS_XMAS)) {
+                checkXmas();
+            }
+            exec(program.get(trees.getPC()),trees);
+        }
+    }
+
+    public static void run(List<Statement> program) throws XXVException {
+        run(program,new XXVTrees());
     }
 
     public static void exec(Statement statement, XXVTrees trees) throws XXVException {
