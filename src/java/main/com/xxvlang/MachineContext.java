@@ -107,7 +107,9 @@ public class MachineContext {
     }
 
     public static void shift(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int length = calcLiteralArg(statement.argument(),trees).intValue();
+        if (trees.getFlag(DIGIT_ARG_AS_MOD)) length %= XXVInt.DIGITS_NUM;
+        trees.pushStack(trees.popStack(statement.subject()).shift(length),statement.subject());
     }
 
     public static void pushPC(Statement statement, XXVTrees trees) throws XXVException {
