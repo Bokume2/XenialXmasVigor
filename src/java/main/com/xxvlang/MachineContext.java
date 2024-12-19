@@ -176,8 +176,16 @@ public class MachineContext {
         trees.dupStack(calcLiteralArg(statement.argument(),trees).intValue(),statement.subject());
     }
 
-    public static void merrychristmas(Statement statement, XXVTrees trees) {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    public static void merrychristmas(Statement statement, XXVTrees trees) throws XXVException {
+        int cnt = calcLiteralArg(statement.argument(),trees).intValue();
+        String mx = "Merry Christmas!";
+        if (trees.getFlag(PUSH_PHRASE_WITH_LF)) mx += '\n';
+        int i = 0;
+        for (char c : mx.toCharArray()) {
+            if (i >= cnt) break;
+            trees.pushStack(new XXVInt(c),statement.subject());
+            i++;
+        }
     }
 
     private static void checkXmas() throws XXVException {
