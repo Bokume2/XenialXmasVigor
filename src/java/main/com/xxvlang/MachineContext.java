@@ -171,7 +171,7 @@ public class MachineContext {
     }
 
     public static void dup(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        trees.dupStack(calcLiteralArg(statement.argument(),trees).intValue(),statement.subject());
     }
 
     public static void merrychristmas(Statement statement, XXVTrees trees) {
