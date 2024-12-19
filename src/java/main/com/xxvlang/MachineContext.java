@@ -228,7 +228,7 @@ public class MachineContext {
     private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {
         return (
             trees.getFlag(flag) &&
-            !trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG)
+            (!trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG))
         );
     }
 
