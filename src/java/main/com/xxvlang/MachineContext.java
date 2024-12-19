@@ -2,6 +2,11 @@ package com.xxvlang;
 
 import java.util.ArrayList;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.Month;
+import java.time.MonthDay;
+
 import com.xxvlang.statement.Statement;
 import com.xxvlang.data.*;
 import com.xxvlang.exception.*;
@@ -205,6 +210,12 @@ public class MachineContext {
 
     public static void merrychristmas(Statement statement, XXVTrees trees) {
         throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    }
+
+    private static void checkXmas() throws XXVException {
+        ZonedDateTime today = ZonedDateTime.now(ZoneOffset.UTC);
+        boolean isReallyXmas = today.getMonth() == Month.DECEMBER && today.getDayOfMonth() == 25;
+        if (!isReallyXmas) throw new XXVException(XXVExceptionType.IS_NOT_XMAS);
     }
 
     private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {
