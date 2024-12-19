@@ -13,41 +13,6 @@ public class MachineContext {
     private ArrayList<Statement> program;
     private XXVTrees trees;
 
-    public static void exec(Statement statement, XXVTrees trees) throws XXVException {
-        if (!trees.getFlag(IS_END)) {
-            switch (statement.instruction()) {
-                case 0 -> pushZero(statement,trees);
-                case 1 -> add(statement,trees);
-                case 2 -> connect(statement,trees);
-                case 3 -> addDigit(statement,trees);
-                case 4 -> divide(statement,trees);
-                case 5 -> exponentiate(statement,trees);
-                case 6 -> extractDigit(statement,trees);
-                case 7 -> move(statement,trees);
-                case 8 -> helloworld(statement,trees);
-                case 9 -> input(statement,trees);
-                case 10 -> jump(statement,trees);
-                case 11 -> shift(statement,trees);
-                case 12 -> pushPC(statement,trees);
-                case 13 -> multiply(statement,trees);
-                case 14 -> reverseFlag(statement,trees);
-                case 15 -> output(statement,trees);
-                case 16 -> push(statement,trees);
-                case 17 -> modulo(statement,trees);
-                case 18 -> floatToTop(statement,trees);
-                case 19 -> subtract(statement,trees);
-                case 20 -> trash(statement,trees);
-                case 21 -> pushRandom(statement,trees);
-                case 22 -> pushSize(statement,trees);
-                case 23 -> dup(statement,trees);
-                case 24 -> merrychristmas(statement,trees);
-                
-                default -> 
-                    throw new UnsupportedOperationException(XXVException.MESSAGE_WRONG_IMPL);
-            }
-        }
-    }
-
     public static void pushZero(Statement statement, XXVTrees trees) {
         for (int i = 0; i < statement.argument(); i++) {
             try {
@@ -247,6 +212,41 @@ public class MachineContext {
             trees.getFlag(flag) &&
             !trees.stackIsEmpty(index) || !trees.getFlag(CAN_FALLBACK_ARG)
         );
+    }
+
+    public static void exec(Statement statement, XXVTrees trees) throws XXVException {
+        if (!trees.getFlag(IS_END)) {
+            switch (statement.instruction()) {
+                case 0 -> pushZero(statement,trees);
+                case 1 -> add(statement,trees);
+                case 2 -> connect(statement,trees);
+                case 3 -> addDigit(statement,trees);
+                case 4 -> divide(statement,trees);
+                case 5 -> exponentiate(statement,trees);
+                case 6 -> extractDigit(statement,trees);
+                case 7 -> move(statement,trees);
+                case 8 -> helloworld(statement,trees);
+                case 9 -> input(statement,trees);
+                case 10 -> jump(statement,trees);
+                case 11 -> shift(statement,trees);
+                case 12 -> pushPC(statement,trees);
+                case 13 -> multiply(statement,trees);
+                case 14 -> reverseFlag(statement,trees);
+                case 15 -> output(statement,trees);
+                case 16 -> push(statement,trees);
+                case 17 -> modulo(statement,trees);
+                case 18 -> floatToTop(statement,trees);
+                case 19 -> subtract(statement,trees);
+                case 20 -> trash(statement,trees);
+                case 21 -> pushRandom(statement,trees);
+                case 22 -> pushSize(statement,trees);
+                case 23 -> dup(statement,trees);
+                case 24 -> merrychristmas(statement,trees);
+                
+                default -> 
+                    throw new UnsupportedOperationException(XXVException.MESSAGE_WRONG_IMPL);
+            }
+        }
     }
     
     public MachineContext(ArrayList<Statement> program) {
