@@ -80,7 +80,7 @@ public class MachineContext {
     }
 
     public static void move(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        trees.move(statement.subject(),statement.argument(),1);
     }
 
     public static void helloworld(Statement statement, XXVTrees trees) {
