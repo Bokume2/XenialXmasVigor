@@ -89,11 +89,19 @@ public class MachineContext {
         int cnt = calcLiteralArg(statement.argument(),trees).intValue();
         String hw = "Hello,world!";
         if (trees.getFlag(PUSH_PHRASE_WITH_LF)) hw += '\n';
-        int i = 0;
-        for (char c : hw.toCharArray()) {
-            if (i >= cnt) break;
-            trees.pushStack(new XXVInt(c),statement.subject());
-            i++;
+        if (cnt > hw.length()) {
+            int tmp = hw.length();
+            hw = hw.repeat(cnt / tmp);
+            cnt %= tmp;
+            String subhw = hw.substring(0,cnt);
+            for (int i = subhw.length() - 1; i >= 0; i--) {
+                trees.pushStack(subhw.charAt(i),statement.subject());
+            }
+        } else {
+            hw = hw.substring(0,cnt);
+        }
+        for (int i = hw.length() - 1; i >= 0; i--) {
+            trees.pushStack(hw.charAt(i),statement.subject());
         }
     }
 
@@ -183,11 +191,19 @@ public class MachineContext {
         int cnt = calcLiteralArg(statement.argument(),trees).intValue();
         String mx = "Merry Christmas!";
         if (trees.getFlag(PUSH_PHRASE_WITH_LF)) mx += '\n';
-        int i = 0;
-        for (char c : mx.toCharArray()) {
-            if (i >= cnt) break;
-            trees.pushStack(new XXVInt(c),statement.subject());
-            i++;
+        if (cnt > mx.length()) {
+            int tmp = mx.length();
+            mx = mx.repeat(cnt / tmp);
+            cnt %= tmp;
+            String submx = mx.substring(0,cnt);
+            for (int i = submx.length() - 1; i >= 0; i--) {
+                trees.pushStack(submx.charAt(i),statement.subject());
+            }
+        } else {
+            mx = mx.substring(0,cnt);
+        }
+        for (int i = mx.length() - 1; i >= 0; i--) {
+            trees.pushStack(mx.charAt(i),statement.subject());
         }
     }
 
