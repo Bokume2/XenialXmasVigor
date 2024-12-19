@@ -9,6 +9,8 @@ import static com.xxvlang.XXVFlag.*;
 
 public class XXVTrees {
 
+    public static int MAIN_LOOP_STACK_INDEX = 12;
+
     private boolean[] flags;
     private XXVStack[] stacks;
 
@@ -126,8 +128,29 @@ public class XXVTrees {
         this.flags[index] = !this.flags[index];
     }
 
+    public void jump(int criteriaIndex, int loopStackIndex) throws XXVException {
+        boolean condition;
+        if (this.stackIsEmpty(criteriaIndex) && this.getFlag(JUMP_WHEN_EMPTY)) {
+            condition = true;
+        } else {
+            int criteria = this.popStack(criteriaIndex).intValue();
+            condition = (
+               criteria > 0 && !this.getFlag(JUMP_WHEN_NEGATIVE) ||
+               criteria < 0 && this.getFlag(JUMP_WHEN_NEGATIVE)
+            );
+        }
+        if (this.getFlag(REVERSE_JUMP_CONDITION)) condition = !condition;
+        if (condition) {
+            int actualLoopStackIndex =
+                this.getFlag(FIXED_LOOP_STACK) ? MAIN_LOOP_STACK_INDEX : loopStackIndex;
+            this.setPC(this.popStack(actualLoopStackIndex).intValue());
+        }
+    }
+
     public void pushPC(int index, int offset) throws XXVException {
-        this.pushStack(new XXVInt(this.getPC() + offset,this.getFlag(CAN_OVERFLOW)),index);
+        int actualIndex =
+            this.getFlag(FIXED_LOOP_STACK) ? MAIN_LOOP_STACK_INDEX : index;
+        this.pushStack(new XXVInt(this.getPC() + offset),actualIndex);
     }
 
     public void setStack(XXVStack stack, int index) {
