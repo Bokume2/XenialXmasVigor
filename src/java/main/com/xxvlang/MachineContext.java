@@ -271,10 +271,14 @@ public class MachineContext {
             }
         }
     }
+
+    public MachineContext(ArrayList<Statement> program, XXVTrees trees) {
+        this.program = program;
+        this.trees = trees;
+    }
     
     public MachineContext(ArrayList<Statement> program) {
-        this.program = program;
-        this.trees = new XXVTrees();
+        this(program,new XXVTrees());
     }
 
 }
