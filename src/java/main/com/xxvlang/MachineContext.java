@@ -168,8 +168,8 @@ public class MachineContext {
         throw new UnsupportedOperationException("Critical Error: Not implemented.");
     }
 
-    public static void pushSize(Statement statement, XXVTrees trees) {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+    public static void pushSize(Statement statement, XXVTrees trees) throws XXVException {
+        trees.pushPC(trees.getStackSize(statement.subject()),statement.argument());
     }
 
     public static void dup(Statement statement, XXVTrees trees) throws XXVException {
