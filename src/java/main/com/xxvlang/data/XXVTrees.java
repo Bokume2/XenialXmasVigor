@@ -150,7 +150,7 @@ public class XXVTrees {
     public void pushPC(int index, int offset) throws XXVException {
         int actualIndex =
             this.getFlag(FIXED_LOOP_STACK) ? MAIN_LOOP_STACK_INDEX : index;
-        this.pushStack(new XXVInt(this.getPC() + offset),actualIndex);
+        this.pushStack(new XXVInt(this.getPC() + offset - 1),actualIndex);
     }
 
     public void setStack(XXVStack stack, int index) {
