@@ -126,6 +126,10 @@ public class XXVTrees {
         this.flags[index] = !this.flags[index];
     }
 
+    public void pushPC(int index, int offset) throws XXVException {
+        this.pushStack(new XXVInt(this.getPC() + offset,this.getFlag(CAN_OVERFLOW)),index);
+    }
+
     public void setStack(XXVStack stack, int index) {
         this.stacks[index] = stack.copy();
     }

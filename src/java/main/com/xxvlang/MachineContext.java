@@ -130,7 +130,14 @@ public class MachineContext {
     }
 
     public static void pushPC(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int arg = statement.argument();
+        int offset;
+        if (canUse_ToStack(OFFSET_TO_STACK,arg,trees)) {
+            offset = trees.popStack(arg).intValue();
+        } else {
+            offset = arg;
+        }
+        trees.pushPC(statement.subject(),offset);
     }
 
     public static void multiply(Statement statement, XXVTrees trees) throws XXVException {
