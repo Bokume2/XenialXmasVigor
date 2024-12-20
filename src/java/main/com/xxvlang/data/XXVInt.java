@@ -168,6 +168,11 @@ public class XXVInt {
                 while (intValue < MIN_VALUE) {
                     intValue += MAX_VALUE + 1;
                 }
+                if (intValue >= 0) {
+                    intValue = MIN_VALUE + intValue;
+                } else {
+                    intValue = MAX_VALUE - intValue;
+                }
             } else {
                 throw new XXVException(XXVExceptionType.OVERFLOW);
             }
