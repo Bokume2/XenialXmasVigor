@@ -1,0 +1,13 @@
+--main-class=com.xxvlang.production.JAREntry
+-C ..\src\java\main\ com\xxvlang\XenialXmasVigor.class
+-C ..\src\java\main\ com\xxvlang\Tokenizer.class
+-C ..\src\java\main\ com\xxvlang\Parser.class
+-C ..\src\java\main\ com\xxvlang\MachineContext.class
+-C ..\src\java\main\ com\xxvlang\XXVFlag.class
+-C ..\src\java\main\ com\xxvlang\data\XXVInt.class
+-C ..\src\java\main\ com\xxvlang\data\XXVStack.class
+-C ..\src\java\main\ com\xxvlang\data\XXVTrees.class
+-C ..\src\java\main\ com\xxvlang\statement\Statement.class
+-C ..\src\java\main\ com\xxvlang\exception\XXVException.class
+-C ..\src\java\main\ com\xxvlang\exception\XXVExceptionType.class
+-C ..\src\java\main\ com\xxvlang\production\JAREntry.class
