@@ -3,11 +3,15 @@ package com.xxvlang;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 import java.util.Random;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.Month;
+
+import java.nio.charset.StandardCharsets;
 
 import com.xxvlang.statement.Statement;
 import com.xxvlang.data.*;
@@ -138,7 +142,20 @@ public class MachineContext {
     }
 
     public static void output(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        if (trees.getFlag(OUTPUT_AS_STRING)) {
+            while (!trees.stackIsEmpty(statement.subject())) {
+                outputOnce(trees,statement.subject());
+            }
+        } else {
+            int cnt = calcLiteralArg(statement.argument(),trees).intValue();
+            for (int i = 0; i < cnt; i++) {
+                outputOnce(trees,statement.subject());
+            }
+        }
+        
+        if (trees.getFlag(LF_EVERY_OUTPUT)) {
+            System.out.println();
+        }
     }
 
     public static void push(Statement statement, XXVTrees trees) throws XXVException {
@@ -211,6 +228,58 @@ public class MachineContext {
         ZonedDateTime today = ZonedDateTime.now(ZoneOffset.UTC);
         boolean isReallyXmas = today.getMonth() == Month.DECEMBER && today.getDayOfMonth() == 25;
         if (!isReallyXmas) throw new XXVException(XXVExceptionType.IS_NOT_XMAS);
+    }
+
+    private static void outputOnce(XXVTrees trees, int index) throws XXVException {
+        if (trees.getFlag(OUTPUT_AS_XXVINT)) {
+            System.out.print(trees.popStack(index));
+        } else {
+            outputOnceUTF8(trees,index);
+        }
+    }
+
+    private static void outputOnceUTF8(XXVTrees trees, int index) throws XXVException {
+        byte[] utfChar = new byte[4];
+        int size = 0;
+        while (size < 4) {
+            int value = trees.popStack(index).intValue();
+            try {
+                if (value < 0x80) {
+                    utfChar[size++] = (byte)value;
+                    break;
+                } else if (value >= 0x8080 && value < 0x10000) {
+                    utfChar[size++] = (byte)(value / 0x100);
+                    utfChar[size++] = (byte)(value % 0x100);
+                } else if (value >= 0x10000 || value < 0xEFBFC0) {
+                    utfChar[size++] = (byte)(value / 0x10000);
+                    utfChar[size++] = (byte)(value / 0x100 % 0x100);
+                    utfChar[size++] = (byte)(value % 0x100);
+                } else if (value == XXVInt.MAX_VALUE) {
+                    int nextValue;
+                    while ((nextValue = trees.popStack(index).intValue()) == XXVInt.MAX_VALUE) {
+                        value += nextValue;
+                    }
+                    value += nextValue;
+                    if (value >= 0xF4BFBFC0) throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+                    utfChar[size++] = (byte)(value / 0x1000000);
+                    utfChar[size++] = (byte)(value / 0x10000 % 0x100);
+                    utfChar[size++] = (byte)(value / 0x100 % 0x100);
+                    utfChar[size++] = (byte)(value % 0x100);
+                } else {
+                    throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+                }
+            } catch (ArrayIndexOutOfBoundsException ae) {
+                throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+            }
+            if (
+                utfChar[0] >= 0xC2 && utfChar[0] < 0xE0 && size == 2 ||
+                utfChar[0] >= 0xE0 && utfChar[0] < 0xF0 && size == 3
+            ) {
+                break;
+            }
+        }
+        utfChar = Arrays.copyOf(utfChar,size);
+        System.out.print(new String(utfChar,StandardCharsets.UTF_8));
     }
 
     private static boolean canUse_ToStack(XXVFlag flag, int index, XXVTrees trees) {

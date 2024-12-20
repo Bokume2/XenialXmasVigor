@@ -25,6 +25,8 @@ public class XXVException extends Exception {
         "Error: An instruction is given an illegal argument.";
     public static final String MESSAGE_IS_NOT_XMAS =
         "Critical error: You told me a lie! Today is not Christmas!";
+    public static final String MESSAGE_ILLEGAL_CHAR_CODE =
+        "Error: Cannot reolve char code which is expected to output.";
     
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
