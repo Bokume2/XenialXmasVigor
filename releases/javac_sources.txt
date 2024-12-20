@@ -1,0 +1,12 @@
+..\src\java\main\com\xxvlang\XenialXmasVigor.java
+..\src\java\main\com\xxvlang\Tokenizer.java
+..\src\java\main\com\xxvlang\Parser.java
+..\src\java\main\com\xxvlang\MachineContext.java
+..\src\java\main\com\xxvlang\XXVFlag.java
+..\src\java\main\com\xxvlang\data\XXVInt.java
+..\src\java\main\com\xxvlang\data\XXVStack.java
+..\src\java\main\com\xxvlang\data\XXVTrees.java
+..\src\java\main\com\xxvlang\statement\Statement.java
+..\src\java\main\com\xxvlang\exception\XXVException.java
+..\src\java\main\com\xxvlang\exception\XXVExceptionType.java
+..\src\java\main\com\xxvlang\production\JAREntry.java
