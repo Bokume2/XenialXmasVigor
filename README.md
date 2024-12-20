@@ -2,7 +2,7 @@
 
 クリスマスをイメージした難解プログラミング言語です。  
 クリスマスツリーのような形状のソースコードを記述し、25本のスタックと25種類のビットフラグを操作してプログラムを実行します。略称はXXVです。  
-[C3 Advent Calender 2024](https://qiita.com/advent-calendar/2024/c3)の[21日目の記事](https://toybox.compositecomputer.club/blogs/354fea2a-2f93-4864-9d5d-e038d77a7586)の題材として制作しました。
+[C3 Advent Calender 2024](https://qiita.com/advent-calendar/2024/c3)の[21日目の記事](https://compositecomputer.club/blog/354fea2a-2f93-4864-9d5d-e038d77a7586)の題材として制作しました。
 
 ## Requirements
 
