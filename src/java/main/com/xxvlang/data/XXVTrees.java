@@ -144,6 +144,9 @@ public class XXVTrees {
             int actualLoopStackIndex =
                 this.getFlag(FIXED_LOOP_STACK) ? MAIN_LOOP_STACK_INDEX : loopStackIndex;
             this.setPC(this.popStack(actualLoopStackIndex).intValue());
+            if (this.getFlag(PC_PUSH_WHEN_JUMP)) {
+                this.pushPC(loopStackIndex,0);
+            }
         }
     }
 
