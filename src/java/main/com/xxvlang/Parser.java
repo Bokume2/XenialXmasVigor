@@ -56,7 +56,7 @@ public class Parser {
                         if (isInLeaf) {
                             result.add(token);
                             tokenNum++;
-                            if (tokenLine.get(i+1) < 0) {
+                            if (i < tokenLine.size() - 1 && tokenLine.get(i+1) < 0) {
                                 i++;
                                 continue;
                             }
