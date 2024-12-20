@@ -18,6 +18,7 @@ import com.xxvlang.data.*;
 import com.xxvlang.exception.*;
 
 import static com.xxvlang.XXVFlag.*;
+import static com.xxvlang.exception.XXVExceptionType.*;
 
 public class MachineContext {
 
@@ -79,7 +80,7 @@ public class MachineContext {
         if (trees.getFlag(DIGIT_ARG_AS_MOD)) {
             index %= XXVInt.DIGITS_NUM;
         } else if (index >= XXVInt.DIGITS_NUM) {
-            throw new XXVException(XXVExceptionType.ILLEGAL_ARGUMENT);
+            throw new XXVException(ILLEGAL_ARGUMENT);
         }
         resultBytes[index] = beforeBytes[index];
         trees.pushStack(new XXVInt(resultBytes), statement.subject());
@@ -227,7 +228,7 @@ public class MachineContext {
     private static void checkXmas() throws XXVException {
         ZonedDateTime today = ZonedDateTime.now(ZoneOffset.UTC);
         boolean isReallyXmas = today.getMonth() == Month.DECEMBER && today.getDayOfMonth() == 25;
-        if (!isReallyXmas) throw new XXVException(XXVExceptionType.IS_NOT_XMAS);
+        if (!isReallyXmas) throw new XXVException(IS_NOT_XMAS);
     }
 
     private static void outputOnce(XXVTrees trees, int index) throws XXVException {
@@ -260,16 +261,16 @@ public class MachineContext {
                         value += nextValue;
                     }
                     value += nextValue;
-                    if (value >= 0xF4BFBFC0) throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+                    if (value >= 0xF4BFBFC0) throw new XXVException(ILLEGAL_CHAR_CODE);
                     utfChar[size++] = (byte)(value / 0x1000000);
                     utfChar[size++] = (byte)(value / 0x10000 % 0x100);
                     utfChar[size++] = (byte)(value / 0x100 % 0x100);
                     utfChar[size++] = (byte)(value % 0x100);
                 } else {
-                    throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+                    throw new XXVException(ILLEGAL_CHAR_CODE);
                 }
             } catch (ArrayIndexOutOfBoundsException ae) {
-                throw new XXVException(XXVExceptionType.ILLEGAL_CHAR_CODE);
+                throw new XXVException(ILLEGAL_CHAR_CODE);
             }
             if (
                 utfChar[0] >= 0xC2 && utfChar[0] < 0xE0 && size == 2 ||
