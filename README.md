@@ -19,6 +19,7 @@ Releasesのjarを使用して実行する場合、JRE SE 21以上、またはそ
 
 ## Build
 cloneしたリポジトリで以下の通り実行すると、releases内に実行可能なjarファイル`xxvlang.jar`が作成されます。  
+Windows PowerShell等の環境では`@`から始まるオプションをダブルクオーテーションで囲むなどして下さい。  
 
 ```
 cd releases
