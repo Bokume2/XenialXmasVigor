@@ -11,6 +11,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.Month;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 import com.xxvlang.statement.Statement;
@@ -240,46 +241,29 @@ public class MachineContext {
     }
 
     private static void outputOnceUTF8(XXVTrees trees, int index) throws XXVException {
-        byte[] utfChar = new byte[4];
-        int size = 0;
-        while (size < 4) {
-            int value = trees.popStack(index).intValue();
-            try {
-                if (value < 0x80) {
-                    utfChar[size++] = (byte)value;
-                    break;
-                } else if (value >= 0x8080 && value < 0x10000) {
-                    utfChar[size++] = (byte)(value / 0x100);
-                    utfChar[size++] = (byte)(value % 0x100);
-                } else if (value >= 0x10000 || value < 0xEFBFC0) {
-                    utfChar[size++] = (byte)(value / 0x10000);
-                    utfChar[size++] = (byte)(value / 0x100 % 0x100);
-                    utfChar[size++] = (byte)(value % 0x100);
-                } else if (value == XXVInt.MAX_VALUE) {
-                    int nextValue;
-                    while ((nextValue = trees.popStack(index).intValue()) == XXVInt.MAX_VALUE) {
-                        value += nextValue;
-                    }
-                    value += nextValue;
-                    if (value >= 0xF4BFBFC0) throw new XXVException(ILLEGAL_CHAR_CODE);
-                    utfChar[size++] = (byte)(value / 0x1000000);
-                    utfChar[size++] = (byte)(value / 0x10000 % 0x100);
-                    utfChar[size++] = (byte)(value / 0x100 % 0x100);
-                    utfChar[size++] = (byte)(value % 0x100);
-                } else {
-                    throw new XXVException(ILLEGAL_CHAR_CODE);
-                }
-            } catch (ArrayIndexOutOfBoundsException ae) {
-                throw new XXVException(ILLEGAL_CHAR_CODE);
+        byte[] utfChar;
+        int value = trees.popStack(index).intValue();
+        if (value == XXVInt.MAX_VALUE) {
+            int cnt = 1;
+            while ((value = trees.popStack(index).intValue()) == XXVInt.MAX_VALUE) {
+                cnt++;
             }
-            if (
-                utfChar[0] >= 0xC2 && utfChar[0] < 0xE0 && size == 2 ||
-                utfChar[0] >= 0xE0 && utfChar[0] < 0xF0 && size == 3
-            ) {
-                break;
+            long sum = XXVInt.MAX_VALUE * cnt + value;
+            if (sum > 0xF4BFBFBFl) throw new XXVException(ILLEGAL_CHAR_CODE);
+            byte[] bytesLong = ByteBuffer.allocate(8).putLong(sum).array();
+            utfChar = Arrays.copyOfRange(bytesLong,4,8);
+        } else {
+            utfChar = ByteBuffer.allocate(4).putInt(value).array();
+            if (utfChar[2] >= (byte)0xF0 && utfChar[0] <= (byte)0xF4) {
+                byte[] tmp = Arrays.copyOf(utfChar,utfChar.length);
+                value = trees.popStack(index).intValue();
+                utfChar = ByteBuffer.allocate(4).putInt(value).array();
+                utfChar = new byte[]{tmp[2],tmp[3],utfChar[2],utfChar[3]};
             }
+            int from = 0;
+            while (from < utfChar.length && utfChar[from] == 0) from++;
+            utfChar = Arrays.copyOfRange(utfChar,from,utfChar.length);
         }
-        utfChar = Arrays.copyOf(utfChar,size);
         System.out.print(new String(utfChar,StandardCharsets.UTF_8));
     }
 
