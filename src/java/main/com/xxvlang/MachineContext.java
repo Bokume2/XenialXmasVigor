@@ -261,7 +261,7 @@ public class MachineContext {
                 utfChar = new byte[]{tmp[2],tmp[3],utfChar[2],utfChar[3]};
             }
             int from = 0;
-            while (from < utfChar.length && utfChar[from] == 0) from++;
+            while (from < utfChar.length - 1 && utfChar[from] == 0) from++;
             utfChar = Arrays.copyOfRange(utfChar,from,utfChar.length);
         }
         System.out.print(new String(utfChar,StandardCharsets.UTF_8));
