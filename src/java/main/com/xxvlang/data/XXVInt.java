@@ -206,9 +206,10 @@ public class XXVInt {
         if (digits.length > DIGITS_NUM) {
             throw new XXVException(XXVExceptionType.TOO_MUCH_DIGITS);
         }
-        for (int i = DIGITS_NUM - digits.length; i < DIGITS_NUM; i++) {
-            if (digits[i] < 25) {
-                this.digits[i] = digits[i];
+        this.digits = new byte[DIGITS_NUM];
+        for (int i = 1; i <= digits.length; i++) {
+            if (digits[digits.length - i] >= 0 && digits[digits.length - i] < 25) {
+                this.digits[this.digits.length - i] = digits[digits.length - i];
             } else {
                 throw new XXVException(XXVExceptionType.ILLEGAL_DIGIT);
             }
