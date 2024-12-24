@@ -3,6 +3,8 @@ package com.xxvlang;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Scanner;
+
 import java.util.Arrays;
 
 import java.util.Random;
@@ -112,7 +114,35 @@ public class MachineContext {
     }
 
     public static void input(Statement statement, XXVTrees trees) throws XXVException {
-        throw new UnsupportedOperationException("Critical Error: Not implemented.");
+        int cnt = calcLiteralArg(statement.argument(),trees).intValue();
+        Scanner stdinScanner = new Scanner(System.in);
+        if (trees.getFlag(INPUT_AS_DECIMAL)) {
+            for (int i = 0; i < cnt && stdinScanner.hasNextInt(); i++) {
+                trees.pushStack(stdinScanner.nextInt(),statement.subject());
+            }
+        } else {
+            int cur = 0;
+            byte[] inputBytes = null;
+            for (int i = 0; i < cnt; i++) {
+                if (inputBytes == null || cur >= inputBytes.length) {
+                    inputBytes = stdinScanner.nextLine().getBytes(StandardCharsets.UTF_8);
+                    cur = 0;
+                }
+
+                if (trees.getFlag(INPUT_AS_XXVINT)) {
+                    cur = inputOnceXXVInt(trees,statement.subject(),inputBytes,cur);
+                } else {
+                    int utfCharlength = checkUTFCharLength(inputBytes[cur]);
+                    byte[] utfCharBytes = Arrays.copyOfRange(inputBytes,cur,cur+utfCharlength);
+                    if (trees.getFlag(DIVIDE_INPUT_AS_BYTES)) {
+                        inputOnceDivideAsBytes(trees,statement.subject(),utfCharBytes);
+                    } else {
+                        inputOnceDivideAsXXVInt(trees,statement.subject(),utfCharBytes);
+                    }
+                    cur += utfCharlength;
+                }
+            }
+        }
     }
 
     public static void jump(Statement statement, XXVTrees trees) throws XXVException {
@@ -230,6 +260,94 @@ public class MachineContext {
         ZonedDateTime today = ZonedDateTime.now(ZoneOffset.UTC);
         boolean isReallyXmas = today.getMonth() == Month.DECEMBER && today.getDayOfMonth() == 25;
         if (!isReallyXmas) throw new XXVException(IS_NOT_XMAS);
+    }
+
+    private static boolean isXXVDigit(int character) {
+        return (
+            character >= 'A' && character <= 'X' ||
+            character >= 'a' && character <= 'x' ||
+            character == 'Z' || 
+            character == 'z'
+        );
+    }
+
+    private static int checkUTFCharLength(byte firstByte) throws XXVException {
+        if (firstByte >= 0 && firstByte < 0x80) {
+            return 1;
+        } else if (firstByte >= (byte)0xC2 && firstByte < (byte)0xE0) {
+            return 2; 
+        } else if (firstByte >= (byte)0xE0 && firstByte < (byte)0xF0) {
+            return 3;
+        } else if (firstByte >= (byte)0xF0 && firstByte < (byte)0xF5) {
+            return 4;
+        } else {
+            throw new XXVException(ILLEGAL_CHAR_CODE);
+        }
+    }
+
+    private static int inputOnceXXVInt(
+        XXVTrees trees, int index, byte[] inputBytes, int cur
+    ) throws XXVException {
+        byte[] value = new byte[XXVInt.DIGITS_NUM];
+        int size;
+        for (size = 0; size < XXVInt.DIGITS_NUM; size++) {
+            value[size] = inputBytes[cur];
+            if (value[size] >= 'A' && value[size] <= 'X') {
+                value[size] -= 'A' - 1;
+            } else if (value[size] >= 'a' && value[size] <= 'x') {
+                value[size] -= 'a' - 1;
+            } else if (value[size] == 'Z' || value[size] == 'z') {
+                value[size] = 0;
+            } else {
+                while (!isXXVDigit(inputBytes[cur]) && cur < inputBytes.length) {
+                    cur++;
+                }
+                break;
+            }
+            cur++;
+            if (cur >= inputBytes.length) {
+                size++;
+                break;
+            }
+        }
+        
+        if (size != 0) {
+            trees.pushStack(new XXVInt(Arrays.copyOf(value,size)),index);
+        }
+
+        return cur;
+    }
+
+    private static void inputOnceDivideAsBytes(
+        XXVTrees trees, int index, byte[] utfCharBytes
+    ) throws XXVException {
+        if (utfCharBytes.length == 4) {
+            byte[] lastHalf = {0,0,utfCharBytes[2],utfCharBytes[3]};
+            byte[] firstHalf = {0,0,utfCharBytes[0],utfCharBytes[1]};
+            trees.pushStack(ByteBuffer.wrap(lastHalf).getInt(),index);
+            trees.pushStack(ByteBuffer.wrap(firstHalf).getInt(),index);
+        } else {
+            byte[] bytesInt = new byte[4];
+            System.arraycopy(
+                utfCharBytes,0,bytesInt,bytesInt.length - utfCharBytes.length,utfCharBytes.length
+            );
+            trees.pushStack(ByteBuffer.wrap(bytesInt).getInt(),index);
+        }
+    }
+
+    private static void inputOnceDivideAsXXVInt(
+        XXVTrees trees, int index, byte[] utfCharBytes
+    ) throws XXVException {
+        byte[] bytesLong = new byte[8];
+        System.arraycopy(
+            utfCharBytes,0,bytesLong,bytesLong.length - utfCharBytes.length,utfCharBytes.length
+        );
+        long value = ByteBuffer.wrap(bytesLong).getLong();
+        int overCnt = (int)(value / (XXVInt.MAX_VALUE + 1));
+        trees.pushStack((int)(value % (XXVInt.MAX_VALUE + 1)),index);
+        for (int i = 0; i < overCnt; i++) {
+            trees.pushStack(XXVInt.MAX_VALUE,index);
+        }
     }
 
     private static void outputOnce(XXVTrees trees, int index) throws XXVException {
