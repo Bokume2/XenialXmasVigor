@@ -254,7 +254,7 @@ public class MachineContext {
             utfChar = Arrays.copyOfRange(bytesLong,4,8);
         } else {
             utfChar = ByteBuffer.allocate(4).putInt(value).array();
-            if (utfChar[2] >= (byte)0xF0 && utfChar[0] <= (byte)0xF4) {
+            if (utfChar[2] >= (byte)0xF0 && utfChar[2] <= (byte)0xF4) {
                 byte[] tmp = Arrays.copyOf(utfChar,utfChar.length);
                 value = trees.popStack(index).intValue();
                 utfChar = ByteBuffer.allocate(4).putInt(value).array();
