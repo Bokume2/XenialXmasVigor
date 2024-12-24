@@ -26,7 +26,7 @@ public class XXVException extends Exception {
     public static final String MESSAGE_IS_NOT_XMAS =
         "Critical error: You told me a lie! Today is not Christmas!";
     public static final String MESSAGE_ILLEGAL_CHAR_CODE =
-        "Error: Cannot resolve char code which is expected to output.";
+        "Error: Cannot resolve char code as UTF-8.";
     
     /*  for XXVInt */
     public static final String MESSAGE_OVERFLOW =
